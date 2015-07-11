@@ -43,6 +43,9 @@ QMap<QString, QVariant> FusionCLI::getGame(FGame *game){
    map.insert("exe", game->getExe().replace("\\", "\\\\"));
    map.insert("path", game->getPath().replace("\\", "\\\\"));
    map.insert("type", game->getType());
+   map.insert("banner", game->getBanner());
+   map.insert("cover", game->getBoxart());
+   map.insert("clearart", game->getClearart());
 
    return map;
 }
