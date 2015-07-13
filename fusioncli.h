@@ -15,6 +15,8 @@ class FusionCLI : public QObject
 public:
     explicit FusionCLI(QObject *parent = 0);
     void execute(int argc, char *argv[]);
+    void refreshList();
+    void launchByID(QString ID);
 signals:
 
 public slots:
@@ -27,6 +29,7 @@ private:
     void print(QList<QVariant> list, QString title);
     void print(QVariant list);
     QTextStream *q;
+    QList<FGame> gameList;
 };
 
 #endif // FUSIONCLI_H

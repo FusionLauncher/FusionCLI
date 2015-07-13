@@ -20,6 +20,6 @@ int main(int argc, char *argv[])
     FusionCLI cli;
     cli.execute(argc, argv);
 
-    QTimer::singleShot(1000, &a, SLOT(quit()));
+    QTimer::singleShot(2000, &a, SLOT(quit()));
     return a.exec();
 }

@@ -7,22 +7,53 @@ FusionCLI::FusionCLI(QObject *parent) : QObject(parent)
         return;
 
     q = new QTextStream(stdout);
+    refreshList();
 }
 
 
 void FusionCLI::execute(int argc, char *argv[]) {
-   if(argc==2)
+
+    if(argc>1)
    {
        QString arg = argv[1];
        if(arg=="-g"||arg=="--allGames")
            getAllGames();
+       else if(arg=="-r"||arg=="--refresh")
+           refreshList();
+       else if(arg=="-l"||arg=="--launch")
+           launchByID(QString(argv[2]));
    }
 }
 
+void FusionCLI::launchByID(QString ID) {
+    bool noError  = true;
+    int gameID  = ID.toInt(&noError, 10);
+
+    if(!noError)
+    {
+        *q << "Cannot read ID, which is: " << ID << endl;
+        return;
+    }
+
+    FGame *game = db.getGame(gameID);
+    if(game == NULL)
+    {
+        *q << "Can't find game with ID: " << ID << endl;
+        return;
+    }
+
+    qDebug() << "launch game: " << game->getName();
+    game->execute();
+}
+
+
+void FusionCLI::refreshList() {
+    gameList.clear();
+    gameList = db.getGameList();
+}
 
 void FusionCLI::getAllGames() {
     qDebug() << "print all games.";
-    QList<FGame> gameList = db.getGameList();
     QList<QVariant> games;
     qDebug() << "Found " << gameList.length() << " games.";
 
@@ -44,8 +75,9 @@ QMap<QString, QVariant> FusionCLI::getGame(FGame *game){
    map.insert("path", game->getPath().replace("\\", "\\\\"));
    map.insert("type", game->getType());
    map.insert("banner", game->getBanner());
-   map.insert("cover", game->getBoxart());
+   map.insert("poster", game->getBoxart());
    map.insert("clearart", game->getClearart());
+   map.insert("clearlogo", game->getClearart());
 
    return map;
 }
