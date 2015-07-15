@@ -1,6 +1,5 @@
 #include "fusioncli.h"
 
-
 FusionCLI::FusionCLI(QObject *parent) : QObject(parent)
 {
     if(!db.init())
@@ -43,7 +42,9 @@ void FusionCLI::launchByID(QString ID) {
     }
 
     qDebug() << "launch game: " << game->getName();
-    game->execute();
+
+    try { game->execute(); } catch( const std::exception &e) { qDebug() << e.what(); }
+
 }
 
 
@@ -53,9 +54,9 @@ void FusionCLI::refreshList() {
 }
 
 void FusionCLI::getAllGames() {
-    qDebug() << "print all games.";
+  //  qDebug() << "print all games.";
     QList<QVariant> games;
-    qDebug() << "Found " << gameList.length() << " games.";
+  //  qDebug() << "Found " << gameList.length() << " games.";
 
     for(int i=0;i<gameList.length();++i) {
        games.append(getGame(&gameList[i]));
@@ -66,7 +67,7 @@ void FusionCLI::getAllGames() {
 }
 
 QMap<QString, QVariant> FusionCLI::getGame(FGame *game){
-    qDebug() << "Print Game: "<< game->getName();
+  //  qDebug() << "Print Game: "<< game->getName();
 
    QMap<QString, QVariant> map;
    map.insert("name", game->getName().replace("\\", "\\\\"));
@@ -74,10 +75,10 @@ QMap<QString, QVariant> FusionCLI::getGame(FGame *game){
    map.insert("exe", game->getExe().replace("\\", "\\\\"));
    map.insert("path", game->getPath().replace("\\", "\\\\"));
    map.insert("type", game->getType());
-   map.insert("banner", game->getBanner());
-   map.insert("poster", game->getBoxart());
-   map.insert("clearart", game->getClearart());
-   map.insert("clearlogo", game->getClearart());
+   map.insert("banner", game->getArt(FArtBanner));
+   map.insert("poster", game->getArt(FArtBox));
+   map.insert("clearart", game->getArt(FArtClearart));
+   map.insert("clearlogo", game->getArt(FArtClearart));
 
    return map;
 }
@@ -85,7 +86,7 @@ QMap<QString, QVariant> FusionCLI::getGame(FGame *game){
 
 
 void FusionCLI::print(QList<QVariant> list, QString title) {
-    qDebug() << "Print QList<QVariant>";
+ //   qDebug() << "Print QList<QVariant>";
 
     *q << "{ \"" << title << "\" : [" << endl;
 

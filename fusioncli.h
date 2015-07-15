@@ -5,6 +5,7 @@
 #include <QList>
 #include <QTextStream>
 
+
 #include "fdb.h"
 #include "fgame.h"
 
