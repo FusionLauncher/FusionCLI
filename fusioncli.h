@@ -31,6 +31,7 @@ private:
     void print(QVariant list);
     QTextStream *q;
     QList<FGame> gameList;
+    void getGameByID(QString ID);
 };
 
 #endif // FUSIONCLI_H

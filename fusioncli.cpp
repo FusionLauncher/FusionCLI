@@ -21,10 +21,14 @@ void FusionCLI::execute(int argc, char *argv[]) {
            refreshList();
        else if(arg=="-l"||arg=="--launch")
            launchByID(QString(argv[2]));
+       else if(arg=="-i"||arg=="--gameInfo") {
+           getGameByID(QString(argv[2]));
+       }
    }
 }
 
-void FusionCLI::launchByID(QString ID) {
+
+void FusionCLI::getGameByID(QString ID) {
     bool noError  = true;
     int gameID  = ID.toInt(&noError, 10);
 
@@ -41,7 +45,31 @@ void FusionCLI::launchByID(QString ID) {
         return;
     }
 
-    qDebug() << "launch game: " << game->getName();
+    qDebug() << "Print game: " << game->getName();
+    print(getGame(game));
+
+}
+
+void FusionCLI::launchByID(QString ID) {
+    bool noError  = true;
+    int gameID  = ID.toInt(&noError, 10);
+
+    if(!noError)
+    {
+        *q << "Cannot read ID, which is: " << ID << endl;
+        qWarning() << "Cannot read ID, which is: " << ID;
+        return;
+    }
+
+    FGame *game = db.getGame(gameID);
+    if(game == NULL)
+    {
+        *q << "Can't find game with ID: " << ID << endl;
+        qWarning() << "Can't find game with ID: " << ID;
+        return;
+    }
+
+    qDebug() << "Launch game: " << game->getName();
 
     try { game->execute(); } catch( const std::exception &e) { qDebug() << e.what(); }
 
@@ -56,7 +84,7 @@ void FusionCLI::refreshList() {
 void FusionCLI::getAllGames() {
   //  qDebug() << "print all games.";
     QList<QVariant> games;
-  //  qDebug() << "Found " << gameList.length() << " games.";
+    qDebug() << "Found " << gameList.length() << " games.";
 
     for(int i=0;i<gameList.length();++i) {
        games.append(getGame(&gameList[i]));
@@ -67,7 +95,7 @@ void FusionCLI::getAllGames() {
 }
 
 QMap<QString, QVariant> FusionCLI::getGame(FGame *game){
-  //  qDebug() << "Print Game: "<< game->getName();
+   qDebug() << "Print Game: "<< game->getName();
 
    QMap<QString, QVariant> map;
    map.insert("name", game->getName().replace("\\", "\\\\"));
@@ -86,7 +114,7 @@ QMap<QString, QVariant> FusionCLI::getGame(FGame *game){
 
 
 void FusionCLI::print(QList<QVariant> list, QString title) {
- //   qDebug() << "Print QList<QVariant>";
+    qDebug() << "Print QList<QVariant>";
 
     *q << "{ \"" << title << "\" : [" << endl;
 
@@ -105,10 +133,10 @@ void FusionCLI::print(QList<QVariant> list, QString title) {
 
 
 void FusionCLI::print(QVariant list) {
+    qDebug() << "print(QVariant list)";
     QString type = list.typeName();
     if(type == "QVariantMap") {
         print(list.toMap());
-
     } else {
         qDebug() << "Type: " << type;
 
@@ -117,6 +145,9 @@ void FusionCLI::print(QVariant list) {
 
 
 void FusionCLI::print(QMap<QString, QVariant> list) {
+    qDebug() << "print(QMap<QString, QVariant> list)";
+
+
     *q << "{" << endl;
     QList<QString> keys = list.keys();
     QList<QVariant> values = list.values();
@@ -129,6 +160,6 @@ void FusionCLI::print(QMap<QString, QVariant> list) {
     *q << "\"" <<  keys[i]<< "\": \""  << values[i].toString() << "\" " << endl;
 
 
-    *q << "} ";
+    *q << "} " << endl;
 }
 
