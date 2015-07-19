@@ -3,19 +3,27 @@
 # Project created by QtCreator 2015-07-09T15:33:38
 #
 #-------------------------------------------------
+#QT       += core sql
+#QT       -= gui
 
-QT       += core
+QT       += core gui sql
+QT       += network
+QT       += webkit
 
-QT       -= gui
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    QT       += webkitwidgets
+#endif
+
 
 TARGET = FusionCLI
-CONFIG   += console
-CONFIG   -= app_bundle
+CONFIG += console
+CONFIG -= app_bundle
 
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    fusioncli.cpp
 
 unix|win32: LIBS += -lLibFusion
 
@@ -25,3 +33,6 @@ else:unix: LIBS += -L$$PWD/../LibFusion/ -lLibFusion
 
 INCLUDEPATH += $$PWD/../LibFusion
 DEPENDPATH += $$PWD/../LibFusion
+
+HEADERS += \
+    fusioncli.h
