@@ -10,19 +10,19 @@ FusionCLI::FusionCLI(QObject *parent) : QObject(parent)
 }
 
 
-void FusionCLI::execute(int argc, char *argv[]) {
+void FusionCLI::execute(int argc, QStringList args) {
 
-    if(argc>1)
+   if(argc>1)
    {
-       QString arg = argv[1];
+       QString arg = args[1];
        if(arg=="-g"||arg=="--allGames")
            getAllGames();
        else if(arg=="-r"||arg=="--refresh")
            refreshList();
        else if(arg=="-l"||arg=="--launch")
-           launchByID(QString(argv[2]));
+           launchByID(args[2]);
        else if(arg=="-i"||arg=="--gameInfo") {
-           getGameByID(QString(argv[2]));
+           getGameByID(args[2]);
        }
    }
 }
