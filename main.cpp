@@ -74,29 +74,30 @@ int main(int argc, char *argv[])
 
     qDebug() << "Args " <<args;
 
-
-
     if(argc<=1) {
-       qout << "Fusion Commandline-Interface"<< endl <<endl;
-       qout << "Usage: fusioncli [options]"<< endl;
-       qout << "--allGames -g: Get all Games with all Info"<< endl<<endl;
+       qout << "Fusion Commandline-Interface" << endl <<endl;
+       qout << "Usage: fusioncli [options]" << endl;
+       qout << "--allGames      | -g     : Get all Games with all Info" << endl;
+       qout << "--refresh       | -r     : Refresh Infos from Database" << endl;
+       qout << "--launch [ID]   | -l [ID]: Launch Game with ID" << endl;
+       qout << "--gameInfo [ID] | -i [ID]: Get info for Game-ID" << endl << endl;
+
 
        QTimer::singleShot(10, &a, SLOT(quit()));
         #ifdef DEBUG_TEST
        dbgFile.close();
        delete dbgStream;
         #endif
+    } else {
+        FusionCLI cli;
+        cli.execute(argc, args);
+
+        QTimer::singleShot(10, &a, SLOT(quit()));
+
+        #ifdef DEBUG_TEST
+        dbgFile.close();
+        delete dbgStream;
+        #endif
     }
-
-    FusionCLI cli;
-    cli.execute(argc, argv);
-
-    QTimer::singleShot(10, &a, SLOT(quit()));
-
-    #ifdef DEBUG_TEST
-    dbgFile.close();
-    delete dbgStream;
-    #endif
-
     return a.exec();
 }

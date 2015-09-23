@@ -15,7 +15,7 @@ class FusionCLI : public QObject
     Q_OBJECT
 public:
     explicit FusionCLI(QObject *parent = 0);
-    void execute(int argc, char *argv[]);
+    void execute(int argc, QStringList args);
     void refreshList();
     void launchByID(QString ID);
 signals:
@@ -30,7 +30,7 @@ private:
     void print(QList<QVariant> list, QString title);
     void print(QVariant list);
     QTextStream *q;
-    QList<FGame> gameList;
+    QList<FGame*> gameList;
     void getGameByID(QString ID);
 };
 
