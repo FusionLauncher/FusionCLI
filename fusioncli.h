@@ -30,7 +30,7 @@ private:
     void print(QList<QVariant> list, QString title);
     void print(QVariant list);
     QTextStream *q;
-    QList<FGame> gameList;
+    QList<FGame*> gameList;
     void getGameByID(QString ID);
 };
 

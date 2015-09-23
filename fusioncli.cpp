@@ -87,7 +87,7 @@ void FusionCLI::getAllGames() {
     qDebug() << "Found " << gameList.length() << " games.";
 
     for(int i=0;i<gameList.length();++i) {
-       games.append(getGame(&gameList[i]));
+       games.append(getGame(gameList[i]));
     }
 
 
