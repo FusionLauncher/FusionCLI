@@ -23,7 +23,7 @@ SOURCES += main.cpp \
     fusioncli.cpp
 
 LIBS += -lLibFusion
-LIBS += -L$$PWD/../BUILD -lLibFusion
+LIBS += -L$$PWD/../OUT -lLibFusion
 
 INCLUDEPATH += $$PWD/../LibFusion
 DEPENDPATH += $$PWD/../LibFusion
