@@ -8,8 +8,8 @@ QT       += webkit
 
 
 DESTDIR = ../OUT
-MOC_DIR = ../BUILD
-OBJECTS_DIR = ../BUILD
+MOC_DIR = BUILD
+OBJECTS_DIR = BUILD
 
 
 TARGET = FusionCLI
