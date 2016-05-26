@@ -25,8 +25,8 @@ SOURCES += main.cpp \
 LIBS += -lLibFusion
 LIBS += -L$$PWD/../OUT -lLibFusion
 
-INCLUDEPATH += $$PWD/../LibFusion
-DEPENDPATH += $$PWD/../LibFusion
+INCLUDEPATH += $$PWD/../LibFusion/LibFusion
+DEPENDPATH += $$PWD/../LibFusion/LibFusion
 
 HEADERS += \
     fusioncli.h
