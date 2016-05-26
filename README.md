@@ -1,2 +1,2 @@
 # FusionCLI
-A CLI Fusion client
+A Commandline-Interface for Fusion client
